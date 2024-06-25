@@ -5,6 +5,6 @@ package com.devbenitez.conversor.principal;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Creando repositorio");
+        System.out.println("Creando repositorio v2");
     }
 }
