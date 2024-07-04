@@ -1,3 +1,6 @@
+https://v6.exchangerate-api.com/v6/072ca556f339e521d1815abe/pair/ARS/USD
+
+
 API KEY
 072ca556f339e521d1815abe
 

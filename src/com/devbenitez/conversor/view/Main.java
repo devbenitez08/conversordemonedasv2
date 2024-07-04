@@ -15,8 +15,12 @@ public class Main {
 
         Scanner leerTeclado = new Scanner(System.in);
         int opcionMenu = 0;
+        double cantidad;
+        double recibeConversion;
 
         Consulta consultaMoneda = new Consulta();
+        Moneda valorMoneda;
+        Calculadora calcula = new Calculadora();
 
         String decoracion = "**********************************";
         String menu = """
@@ -45,43 +49,93 @@ public class Main {
 
                 case 1:
 
-                    Moneda valorMoneda = consultaMoneda.buscaMoneda("USD", "ARS");
+                    valorMoneda = consultaMoneda.buscaMoneda("USD", "ARS");
 
                     System.out.println("Ingrese el valor que desea convertir: ");
-                    double cantidad = leerTeclado.nextDouble();
+                    cantidad = leerTeclado.nextDouble();
 
-                    Calculadora calcula = new Calculadora();
                     calcula.calcularConversion(cantidad, valorMoneda);
-                    double recibeConversion = calcula.getConversion();
-
-                    BigDecimal bd = new BigDecimal(recibeConversion);
-                    bd = bd.setScale(2, RoundingMode.HALF_UP);
+                    recibeConversion = calcula.getConversion();
 
                     System.out.println("El valor de " + cantidad + " [USD]" + "corresponde al valor final de =>>> " +
-                            bd.doubleValue() + " [ARS]");
+                            (double)Math.round (recibeConversion * 100d) / 100 + " [ARS]");
 
                     break;
 
                 case 2:
 
+                    valorMoneda = consultaMoneda.buscaMoneda("ARS", "USD");
+
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    cantidad = leerTeclado.nextDouble();
+
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    recibeConversion = calcula.getConversion();
+
+                    System.out.println("El valor de " + cantidad + " [ARS]" + "corresponde al valor final de =>>> " +
+                            (double)Math.round (recibeConversion * 100d) / 100  + " [USD]");
+
                     break;
 
                 case 3:
 
+                    valorMoneda = consultaMoneda.buscaMoneda("USD", "BRL");
+
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    cantidad = leerTeclado.nextDouble();
+
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    recibeConversion = calcula.getConversion();
+
+                    System.out.println("El valor de " + cantidad + " [USD]" + "corresponde al valor final de =>>> " +
+                            (double)Math.round (recibeConversion * 100d) / 100 + " [BRL]");
+
                     break;
                 case 4:
+                    valorMoneda = consultaMoneda.buscaMoneda("BRL", "USD");
 
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    cantidad = leerTeclado.nextDouble();
+
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    recibeConversion = calcula.getConversion();
+
+                    System.out.println("El valor de " + cantidad + " [BRL]" + "corresponde al valor final de =>>> " +
+                            (double)Math.round (recibeConversion * 100d) / 100 + " [USD]");
                     break;
                 case 5:
 
+                    valorMoneda = consultaMoneda.buscaMoneda("USD", "COP");
+
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    cantidad = leerTeclado.nextDouble();
+
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    recibeConversion = calcula.getConversion();
+
+                    System.out.println("El valor de " + cantidad + " [USD]" + "corresponde al valor final de =>>> " +
+                            (double)Math.round (recibeConversion * 100d) / 100 + " [COP]");
+
                     break;
                 case 6:
+
+                    valorMoneda = consultaMoneda.buscaMoneda("COP", "USD");
+
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    cantidad = leerTeclado.nextDouble();
+
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    recibeConversion = calcula.getConversion();
+
+                    System.out.println("El valor de " + cantidad + " [COP]" + "corresponde al valor final de =>>> " +
+                            (double)Math.round (recibeConversion * 100d) / 100 + " [USD]");
 
                     break;
 
                 case 7:
                     System.out.println("Gracias por usar nuestro servicio. Hasta luego.");
                     break;
+
                 default:
                     System.out.println("Seleccione una opcion valida");
             }
