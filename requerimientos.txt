@@ -32,7 +32,7 @@ COP - Peso colombiano
 USD - Dólar estadounidense
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-Ingrese el valor que desea convertir:
+
 
 El valor de <valor.0> [USD] corresponde al valor final de =>>> <conversion.00> [ARS]
 

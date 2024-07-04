@@ -1,13 +1,10 @@
 package com.devbenitez.conversor.model;
 
 public record Moneda(String result,
-                     int time_last_update_utc,
-                     double conversion_rates
+                     String time_last_update_utc,
+                     double conversion_rate
                      ) {
 
-    //Conversion_Rates conversion_rates
 
-    /*,
-    ArrayList<String> conversion_rates
-    */
+
 }

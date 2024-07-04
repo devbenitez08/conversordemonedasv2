@@ -1,5 +1,6 @@
-package com.devbenitez.conversor.model;
+package com.devbenitez.conversor.controller;
 
+import com.devbenitez.conversor.model.Moneda;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -10,24 +11,19 @@ import java.net.http.HttpResponse;
 
 public class Consulta {
 
-    public Moneda buscaMoneda (String monedaBaseCode, String monedaTarget){
+    public Moneda buscaMoneda (String monedaBaseCode, String monedaTargetCode){
 
-        URI direccion = URI.create("https://v6.exchangerate-api.com/v6/072ca556f339e521d1815abe/latest/" + monedaBaseCode + "/" + monedaTarget);
+        URI direccion = URI.create("https://v6.exchangerate-api.com/v6/072ca556f339e521d1815abe/pair/" + monedaBaseCode + "/" + monedaTargetCode);
 
-        HttpClient client = HttpClient.newHttpClient(); //crea un cliente
+        HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(direccion)
                 .build();
 
-
         try {
             HttpResponse<String> response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
-
-            /*System.out.println("desde el try");
-            System.out.println(response);   //contiene un GET implicito y la url. En el cuerpo contiene un json
-            System.out.println("----------------");*/
 
             return new Gson().fromJson(response.body(), Moneda.class);
 

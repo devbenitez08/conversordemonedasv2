@@ -1,15 +1,11 @@
 package com.devbenitez.conversor.view;
 
-import com.devbenitez.conversor.model.Consulta;
-import com.devbenitez.conversor.model.Conversion_Rates;
+import com.devbenitez.conversor.controller.Calculadora;
+import com.devbenitez.conversor.controller.Consulta;
 import com.devbenitez.conversor.model.Moneda;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -18,13 +14,11 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner leerTeclado = new Scanner(System.in);
-        String monedaOrigen;
-        Consulta consultaMoneda = new Consulta();   //crea una instancia de Consulta
-                                                    // solicitud y procesamiento de una consulta solicitada
-                                                    //por la opcion seleccionada del menu
+        int opcionMenu = 0;
 
-        // ------------- menu ---------------
-        String decoracion = "****************************";
+        Consulta consultaMoneda = new Consulta();
+
+        String decoracion = "**********************************";
         String menu = """
                 1) Dólar =>> Peso argentino
                 2) Peso argentino =>> Dólar
@@ -33,58 +27,39 @@ public class Main {
                 5) Dólar =>> Peso colombiano
                 6) Peso colombiano =>> Dólar
                 7) Salir
+                
                 Elija una opción valida:
                 """;
-        String temporal = "menu";
-        // ------------- menu ---------------
 
+        System.out.println("Sea bienvenido/a al Conversor de Monedas by devBenitez :)");
 
-        System.out.println("Sea bienvenido/a al Conversor de Monedas :)");
-
-        while (true){
+        while (opcionMenu != 7){
 
             System.out.println(decoracion);
-            System.out.print(temporal);
+            System.out.print(menu);
             System.out.println(decoracion);
 
-            var opcionMenu = leerTeclado.nextInt();
-
-            if (opcionMenu == 7){
-                System.out.println("Gracias por utilizar nuestro servicio. Hasta luego.");
-                break;
-            } // if salir
+            opcionMenu = leerTeclado.nextInt();
 
             switch (opcionMenu){
 
                 case 1:
-                    monedaOrigen = "USD";
 
-                    Moneda valorMoneda = consultaMoneda.buscaMoneda(monedaOrigen);   // que moneda consultar
-                                                                                //devuelve el cotenido de Moneda
-                    System.out.println("tipo moneda: " + valorMoneda);
+                    Moneda valorMoneda = consultaMoneda.buscaMoneda("USD", "ARS");
 
-                    //System.out.println(valorMoneda.conversion_rates().ARS());   //funciona
-                    //String jsonValorMoneda = String.valueOf(valorMoneda);
+                    System.out.println("Ingrese el valor que desea convertir: ");
+                    double cantidad = leerTeclado.nextDouble();
 
-                    //JsonParser parser = Json.createParser(new StringReader("[]"));
+                    Calculadora calcula = new Calculadora();
+                    calcula.calcularConversion(cantidad, valorMoneda);
+                    double recibeConversion = calcula.getConversion();
 
+                    BigDecimal bd = new BigDecimal(recibeConversion);
+                    bd = bd.setScale(2, RoundingMode.HALF_UP);
 
+                    System.out.println("El valor de " + cantidad + " [USD]" + "corresponde al valor final de =>>> " +
+                            bd.doubleValue() + " [ARS]");
 
-
-                    /*
-                    System.out.println(valorMoneda.getClass().getSimpleName());
-                    String jsonValorMoneda = String.valueOf(valorMoneda);
-                    System.out.println("tipo string: " + json);
-                    System.out.println(json.getClass().getSimpleName());
-
-                    JsonObject objetoJson =  new JsonObject(json); */
-
-                    //Tratando valorMoneda con JSONObject y JSON
-                    // pasando json a array
-
-                    /*Conversion_Rates tipoMoneda = valorMoneda.conversion_rates();  //entra al Sub JsonArray
-                    System.out.println("1 dolar equivale a " + tipoMoneda.ARS() + " pesos argentinos");
-                    */
                     break;
 
                 case 2:
@@ -103,8 +78,9 @@ public class Main {
                 case 6:
 
                     break;
-                case 7:
 
+                case 7:
+                    System.out.println("Gracias por usar nuestro servicio. Hasta luego.");
                     break;
                 default:
                     System.out.println("Seleccione una opcion valida");
