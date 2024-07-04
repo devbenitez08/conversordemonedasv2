@@ -10,9 +10,9 @@ import java.net.http.HttpResponse;
 
 public class Consulta {
 
-    public Moneda buscaMoneda (String moneda){
+    public Moneda buscaMoneda (String monedaBaseCode, String monedaTarget){
 
-        URI direccion = URI.create("https://v6.exchangerate-api.com/v6/072ca556f339e521d1815abe/latest/" + moneda);
+        URI direccion = URI.create("https://v6.exchangerate-api.com/v6/072ca556f339e521d1815abe/latest/" + monedaBaseCode + "/" + monedaTarget);
 
         HttpClient client = HttpClient.newHttpClient(); //crea un cliente
 
@@ -24,6 +24,10 @@ public class Consulta {
         try {
             HttpResponse<String> response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
+
+            /*System.out.println("desde el try");
+            System.out.println(response);   //contiene un GET implicito y la url. En el cuerpo contiene un json
+            System.out.println("----------------");*/
 
             return new Gson().fromJson(response.body(), Moneda.class);
 
